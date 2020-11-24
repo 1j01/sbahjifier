@@ -14,7 +14,7 @@ ${selector} {
 		css += `
 ${selector} {
 	filter:
-		saturate(${Math.floor((Math.random()*7055545))}%)
+		saturate(${Math.floor((Math.random()*7055))}%)
 		hue-rotate(${Math.floor((Math.random()*360))}deg)
 		${((Math.random()<0.5)?"invert() ":"")}
 		!important;
