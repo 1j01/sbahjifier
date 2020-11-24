@@ -172,7 +172,7 @@ findAndReplace(/[dg]/ig, function (m) {
     var c = ((Math.random() > 0.3) ? m : choose("dg"));
     if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 });
-findAndReplace(/\./ig, function (m) {
+findAndReplace(/\.+/ig, function (m) {
     return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
 });
 findAndReplace("their|they're|tha're", "there");
