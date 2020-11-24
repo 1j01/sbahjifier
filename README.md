@@ -3,7 +3,7 @@
 Make any page look like [SWEET BRO AND HELLA JEFF][].
 
 "Dave: Combine brain and SBaHJ drawing and chrome extension."
-([relevant comic page](http://www.mspaintadventures.com/?s=6&p=003745))
+([relevant comic page](https://www.homestuck.com/story/1845))
 
 Install the extension [on the Chrome Web Store][Chrome Web Store page].
 
