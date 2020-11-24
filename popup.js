@@ -45,7 +45,7 @@ var c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q,p
 
 chrome.tabs.insertCSS(null, { code: c }, function () {
 	if (chrome.extension.lastError) {
-		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\nBWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n<small>${chrome.extension.lastError}</small>`;
+		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\nBWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n<br><small>${`${chrome.extension.lastError}`.match(/missing host permission/i) ? "Try a different website!" : chrome.extension.lastError}</small>`;
 		img.src = chrome.extension.getURL('rii.jpg');
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
@@ -55,7 +55,7 @@ chrome.tabs.insertCSS(null, { code: c }, function () {
 
 chrome.tabs.executeScript(null, { file: "injected.js" }, function () {
 	if (chrome.extension.lastError) {
-		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\n<small>${chrome.extension.lastError}</small>`;
+		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\n<br><small>${`${chrome.extension.lastError}`.match(/missing host permission/i) ? "Try a different website!" : chrome.extension.lastError}</small>`;
 		img.src = chrome.extension.getURL('rii.jpg');
 	} else {
 		txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
