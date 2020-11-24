@@ -11,7 +11,12 @@
     "tabs",
     "<all_urls>"
   ],
-
+  "web_accessible_resources": [
+    "many-images/*",
+    "rii.jpg",
+    "awyeahbitches.gif",
+    "whurr.png"
+  ],
   "browser_action": {
     "default_title": "SBAHJify!",
     "default_popup": "popup.html",
