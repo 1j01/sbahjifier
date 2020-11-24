@@ -1,6 +1,6 @@
 
 
-a = document.querySelectorAll("img");
+a = Array.from(document.querySelectorAll("img"));
 for (i in a) {
     if (Math.random() < 0.01) {
         a[i].src = getimageurl(a[i].width, a[i].height);
@@ -12,26 +12,31 @@ for (i in a) {
 }
 
 // add things to the page, mess with some css
-a = document.querySelectorAll("*");
+a = Array.from(document.querySelectorAll("*"));
 for (i in a) {
     try {
         if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i] && a[i].style && a[i].insertAdjacentHTML) {
             if (Math.random() < 0.001) {
-                a[i].style.backgroundImage = "url(" + getimageurl() + ")";
+                a[i].style.backgroundImage = `url("${getimageurl()}")`;
             } else if (Math.random() < 0.01) {
-                a[i].style.backgroundColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-                a[i].style.color = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+                a[i].style.backgroundColor = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
+                a[i].style.color = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
             }
-            //TODO: Make number of images varry inversely with the number of elements on the page.
+            //TODO: Make number of images vary inversely with the number of elements on the page.
             if (Math.random() < 0.002 || ispop) {
                 a[i].insertAdjacentHTML(choose(['after', 'before']) + choose(['begin', 'end']),
-                    '<img src="' + getimageurl() + '" class="SBAHJ"'
-                    + '>');
+                    `<img
+                        src="${getimageurl()}"
+                        class="SBAHJ"
+                    >`);
             } else if (Math.random() < 0.005 || ispop) {
                 a[i].insertAdjacentHTML(choose(['after', 'before']) + choose(['begin', 'end']),
-                    '<img src="' + getimageurl() + '" class="SBAHJ" '
-                    + 'width="' + Math.random() * 600 + '" height="' + Math.random() * 600 + '"'
-                    + '>');
+                    `<img
+                        src="${getimageurl()}"
+                        class="SBAHJ"
+                        width="${Math.random() * 600}"
+                        height="${Math.random() * 600}"'
+                    >`);
             } else if (Math.random() < 0.1) {
                 //a[i].style.webkitAppearance="media-mute-button";
             }
@@ -40,42 +45,42 @@ for (i in a) {
         //...
     }
 }
-/*
-// add things to the page
-a=document.querySelectorAll("div");
-for(i in a){
-    if(Math.random()<0.02){
-        a[i].insertAdjacentHTML('afterend', '<img src='+getimageurl()+'>');
-    }else if(Math.random()<0.005){
-        a[i].insertAdjacentHTML('afterend', '<img src='+getimageurl()+' width='+Math.random()*100+' height='+Math.random()*100+'>');
-    }else if(Math.random()<0.1){
-        a[i].style.webkitAppearance="media-mute-button";
-    }
-}*/
+
+// // add things to the page
+// a = Array.from(document.querySelectorAll("div"));
+// for (i in a) {
+//     if (Math.random() < 0.02) {
+//         a[i].insertAdjacentHTML('afterend', `<img src=${getimageurl()}>`);
+//     } else if (Math.random() < 0.005) {
+//         a[i].insertAdjacentHTML('afterend', `<img src=${getimageurl()} width=${Math.random() * 100} height=${Math.random() * 100}>`);
+//     } else if (Math.random() < 0.1) {
+//         a[i].style.webkitAppearance = "media-mute-button";
+//     }
+// }
 
 /////////////////////////////////////
 
-var nl = (document.getElementsByClassName("SBAHJ-static-canvas"));
-for (i in nl) { buttun(nl[i], nl[i].text); }
-var nl = (document.querySelectorAll("button,h1,h2,h3,.button,input[type=submit]"));
-for (i in nl) { buttun(nl[i]); }
-/*var nl=(document.getElementsByTagName("button"));
-for(i in nl){buttun(nl[i]);}
-var nl=(document.getElementsByTagName("h1"));
-for(i in nl){buttun(nl[i]);}*/
+var els = Array.from(document.getElementsByClassName("SBAHJ-static-canvas"));
+for (i in els) { buttun(els[i], els[i].text); }
+var els = Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[type=submit]"));
+for (i in els) { buttun(els[i]); }
+// var els = Array.from(document.getElementsByTagName("button"));
+// for (i in els) { buttun(els[i]); }
+// var els = Array.from(document.getElementsByTagName("h1"));
+// for (i in els) { buttun(els[i]); }
 
 function buttun(e, text) {
     if (!e || !e.style) return;
     text = text || e.innerText || e.value || e.text || e.txt || e.title || e.name || e.className || "bro..........";
-    /*if(!e){
-        console.log("Nothing here!");
-        return;
-    }else{
-        if(!e.style){
-            console.log("Not an element!!");
-            return;
-        }
-    }*/
+    // if (!e) {
+    //     console.log("Nothing here!");
+    //     return;
+    // } else {
+    //     if (!e.style) {
+    //         console.log("Not an element!!");
+    //         return;
+    //     }
+    // }
     //var e=document.getElementById("buttun");
     var canvas = document.createElement("canvas");
     canvas.className = "SBAHJ-static-canvas";
@@ -84,13 +89,13 @@ function buttun(e, text) {
     //canvas.style.webkitTransform="scale(2)";
     //alert(getComputedStyle(e).pixelWidth);
     if (Math.random() > 0.5)
-        e.style.background = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
+        e.style.background = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
     //e.style.border="0";
 
     //canvas.width=300+Math.random()*100;
     //canvas.height=30+Math.random()*30;
-    //canvas.style.width=(400+Math.random()*400)+"px";
-    //canvas.style.height=(130+Math.random()*10)+"px";
+    //canvas.style.width=`${400+Math.random()*400}px`;
+    //canvas.style.height=`${130+Math.random()*10}px`;
     //canvas.width=canvas.offsetWidth+31;
     //canvas.height=canvas.offsetHeight+41;
     //canvas.style.width=getComputedStyle(e).pixelWidth;
@@ -98,8 +103,8 @@ function buttun(e, text) {
     var s = choose([0.5, 1, 1, 2, 2, 2, 3, 1, 3, 5, 1, 1, 1, 1, 2, 2]);
     canvas.width = parseInt(getComputedStyle(e).pixelWidth) / s;
     canvas.height = parseInt(getComputedStyle(e).pixelHeight) / s;
-    canvas.style.width = parseInt(getComputedStyle(e).pixelWidth) * s + "px";
-    canvas.style.height = parseInt(getComputedStyle(e).pixelHeight) * s + "px";
+    canvas.style.width = `${parseInt(getComputedStyle(e).pixelWidth) * s}px`;
+    canvas.style.height = `${parseInt(getComputedStyle(e).pixelHeight) * s}px`;
     //e.parentNode.appendChild(canvas, e);
     var ctx = canvas.getContext("2d");
     ctx.save();
@@ -116,13 +121,13 @@ function buttun(e, text) {
             y1 = Math.random() * 50;
         }
 
-        ctx.fillStyle = "hsl(" + Math.floor(Math.random() * 360) + ", 100%, 50%)";
+        ctx.fillStyle = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
         ctx.globalCompositeOperation = (Math.random() > 0.5) ? "xor" : ((Math.random() > 0.5) ? "copy" : "lighter");
         ctx.fillRect(x, y, canvas.width - x1 - x, canvas.height - y1 - y);
     }
 
     ctx.restore();
-    ctx.font = ((Math.random() < 0.5) ? "normal " : "bold ") + (15 + Math.random() * 20) + "pt 'Comic Sans' 'Comic Sans MS'";
+    ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'Comic Sans' 'Comic Sans MS' 'ComicSans' 'Chalkboard SE' 'Comic Neue' 'comic' 'sans-serif'`;
     ctx.lineWidth = 5;
     ctx.strokeStyle = 'rgba(0,0,0,255)';
     ctx.textAlign = choose(['center', 'left', 'center', 'left', 'right']);
