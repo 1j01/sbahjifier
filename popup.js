@@ -3,16 +3,23 @@ var txt = document.querySelector('#swe');
 var img = document.querySelector('#sbahjimg');
 
 function getCSS(selector){
-	var css = selector;
+	var css = "";
 	if((Math.random() < 0.05)){
-		css += "{-webkit-appearance:media-mute-button}";
+		css += `
+${selector} {
+	-webkit-appearance: media-mute-button; /* try to trigger render engine bugs :) */
+}
+`;
 	}else{
-		css += "{filter: "+
-			"saturate("+Math.floor((Math.random()*7055545))+"%) "+
-			"hue-rotate("+Math.floor((Math.random()*360))+"deg) "+
-			((Math.random()<0.5)?"invert() ":"")+
-		" !important;}";
-		// css += "{}";
+		css += `
+${selector} {
+	filter:
+		saturate(${Math.floor((Math.random()*7055545))}%)
+		hue-rotate(${Math.floor((Math.random()*360))}deg)
+		${((Math.random()<0.5)?"invert() ":"")}
+		!important;
+}
+`;
 	}
 	if(selector != "body"){
 		css += getCSS("body");
