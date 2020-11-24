@@ -19,11 +19,14 @@ function getCSS(selector){
 	}
 	css += `
 * {
-	font-family: "Comic Sans", "Comic Sans MS", Chalkboard SE", "Comic Neue", comic, sans-serif;
+	font-family: "Comic Sans", "Comic Sans MS", "ComicSans", "Chalkboard SE", "Comic Neue", comic, sans-serif;
 }
 @font-face {
-	font-family: "Comic Sans";
-	src: url("comic-sans.woff");
+	font-family: "ComicSans";
+	src: url('${chrome.extension.getURL('comic-sans.woff')}');
+	src:
+		url('${chrome.extension.getURL('comic-sans.woff')}') format('woff'),
+		url('${chrome.extension.getURL('comic-sans.ttf')}') format('truetype');
 }
 :nth-child(${Math.floor(Math.random()*10)}):hover:after { content: url("${getgeromyurl()}"); }
 :nth-child(${Math.floor(Math.random()*10)}):hover:after { content: url("${getgeromyurl()}"); }

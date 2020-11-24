@@ -13,6 +13,8 @@
   ],
   "web_accessible_resources": [
     "many-images/*",
+    "comic-sans.woff",
+    "comic-sans.ttf",
     "rii.jpg",
     "awyeahbitches.gif",
     "whurr.png"
