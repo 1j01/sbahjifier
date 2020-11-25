@@ -44,10 +44,22 @@ ${selector} {
 
 var c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q,p", ":not(img)", "div:first-child,ul"]));
 
+var showError = function (error, bwe) {
+	var errorString = `${error.message || error}`;
+	if (errorString.match(/chrome:\/\/|host permission/i)) {
+		errorString = "Try a different website!";
+	}
+	txt.innerHTML = `
+	Sorry bro this page thinks its cool but its not dont worry.
+	${bwe ? "BWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" : ""}
+	<br>
+	<small>${errorString}</small>`;
+	img.src = chrome.extension.getURL('rii.jpg');
+};
+
 chrome.tabs.insertCSS(null, { code: c }, function () {
 	if (chrome.extension.lastError) {
-		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\nBWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n<br><small>${`${chrome.extension.lastError}`.match(/missing host permission/i) ? "Try a different website!" : chrome.extension.lastError}</small>`;
-		img.src = chrome.extension.getURL('rii.jpg');
+		showError(chrome.extension.lastError, true);
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 		img.src = chrome.extension.getURL('awyeahbitches.gif');
@@ -56,8 +68,7 @@ chrome.tabs.insertCSS(null, { code: c }, function () {
 
 chrome.tabs.executeScript(null, { file: "injected.js" }, function () {
 	if (chrome.extension.lastError) {
-		txt.innerHTML = `Sorry bro this page thinks its cool but its not dont worry.\n<br><small>${`${chrome.extension.lastError}`.match(/missing host permission/i) ? "Try a different website!" : chrome.extension.lastError}</small>`;
-		img.src = chrome.extension.getURL('rii.jpg');
+		showError(chrome.extension.lastError, false);
 	} else {
 		txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 	}
