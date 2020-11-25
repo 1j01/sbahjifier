@@ -7,9 +7,7 @@
 																														   "48": "icon48.png",
 																														  "128": "icon128.png"	},
   "permissions": [
-    "storage",
-    "tabs",
-    "<all_urls>"
+    "activeTab"
   ],
   "web_accessible_resources": [
     "many-images/*",
