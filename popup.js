@@ -26,7 +26,7 @@ ${selector} {
 	}
 	css += `
 * {
-	font-family: "Comic Sans", "Comic Sans MS", "ComicSans", "Chalkboard SE", "Comic Neue", comic, sans-serif;
+	font-family: "Comic Sans", "Comic Sans MS", "ComicSans", "Chalkboard SE", "Comic Neue", comic, sans-serif !important;
 }
 @font-face {
 	font-family: "ComicSans";
