@@ -66,7 +66,7 @@ chrome.tabs.insertCSS(null, { code: c }, function () {
 	}
 });
 
-chrome.tabs.executeScript(null, { file: "injected.js" }, function () {
+chrome.tabs.executeScript(null, { file: "/injected.js" }, function () {
 	if (chrome.extension.lastError) {
 		showError(chrome.extension.lastError, false);
 	} else {
