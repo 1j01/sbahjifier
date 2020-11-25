@@ -293,7 +293,9 @@ findAndReplace(/[dg]/ig, function (m) {
 findAndReplace(/\.+/ig, function (m) {
 	return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
 });
-findAndReplace("their|they're|tha're", "there");
+findAndReplace(/their|they're|there|thare|thair|tha're|the're|thei're|thier/ig, function (m) {
+	return choose(["their", "they're", "there", "thare", "thair", "tha're", "the're", "thei're", "thier"]);
+});
 findAndReplace("'ll", "'m");
 //findAndReplace(/[b-df-hj-np-tvwxz]/ig,function(m){return ((Math.random()>0.01)?m:choose("wrtpsdfghjklzxcvbnm"))});
 
