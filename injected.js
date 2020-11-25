@@ -266,38 +266,46 @@ function buttun(e, text) {
 
 // this improvis our smelling and grammer.............. BTRRRRR!!!!!1.?
 var uc = false;
-findAndReplace(/./ig, function (m) {
-	return m.toLowerCase();
-});
+var replacements = [
+	[/./ig, function (m) {
+		return m.toLowerCase();
+	}],
+	[/[ei](?!\b)/ig, function (m) {
+		var c = ((Math.random() > 0.4) ? m : choose("ei"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[uo]/ig, function (m) {
+		var c = ((Math.random() > 0.4) ? m : choose("uo"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[aeiou]/ig, function (m) {
+		var c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[b-df-hj-np-tvwxz]/ig, function (m) {
+		var c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[dg]/ig, function (m) {
+		var c = ((Math.random() > 0.3) ? m : choose("dg"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/\.+/ig, function (m) {
+		return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
+	}],
+	[/their|they're|there|thare|thair|tha're|the're|thei're|thier/ig, function (m) {
+		return choose(["their", "they're", "there", "thare", "thair", "tha're", "the're", "thei're", "thier"]);
+	}],
+	[/'ll/ig, "'m"],
+	// [/[b-df-hj-np-tvwxz]/ig, function (m) { return ((Math.random() > 0.01) ? m : choose("wrtpsdfghjklzxcvbnm")) }],
+];
 
-findAndReplace(/[ei](?!\b)/ig, function (m) {
-	var c = ((Math.random() > 0.4) ? m : choose("ei"));
-	if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-});
-findAndReplace(/[uo]/ig, function (m) {
-	var c = ((Math.random() > 0.4) ? m : choose("uo"));
-	if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-});
-findAndReplace(/[aeiou]/ig, function (m) {
-	var c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
-	if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-});
-findAndReplace(/[b-df-hj-np-tvwxz]/ig, function (m) {
-	var c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
-	if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-});
-findAndReplace(/[dg]/ig, function (m) {
-	var c = ((Math.random() > 0.3) ? m : choose("dg"));
-	if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-});
-findAndReplace(/\.+/ig, function (m) {
-	return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
-});
-findAndReplace(/their|they're|there|thare|thair|tha're|the're|thei're|thier/ig, function (m) {
-	return choose(["their", "they're", "there", "thare", "thair", "tha're", "the're", "thei're", "thier"]);
-});
-findAndReplace("'ll", "'m");
-//findAndReplace(/[b-df-hj-np-tvwxz]/ig,function(m){return ((Math.random()>0.01)?m:choose("wrtpsdfghjklzxcvbnm"))});
+function modifyText(text) {
+	for (const [regexp, replacer] of replacements) {
+		text = text.replace(regexp, replacer);
+	}
+	return text;
+}
 
 function isChillElementType(tagName) {
 	return tagName !== "BODY"
@@ -305,29 +313,28 @@ function isChillElementType(tagName) {
 		&& tagName !== "HTML"
 		&& tagName !== "STYLE";
 }
-function findAndReplace(searchText, replacement, searchNode) {
-	if (!searchText || typeof replacement === 'undefined') {
-		return;
-	}
-	var regex = typeof searchText === 'string' ?
-		new RegExp(searchText, 'g') : searchText,
-		childNodes = (searchNode || document.body).childNodes,
-		cnLength = childNodes.length,
-		excludes = 'html,head,style,title,link,meta,script,object,iframe';
+function modifyTextOnPage(modifyText, searchNode=document.body) {
+	var childNodes = searchNode.childNodes;
+	var cnLength = childNodes.length;
+	var excludes = 'html,head,style,title,link,meta,script,object,iframe';
 	while (cnLength--) {
 		var currentNode = childNodes[cnLength];
 		if (currentNode.nodeType === 1 &&
 			(excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
-			arguments.callee(searchText, replacement, currentNode);
+			modifyTextOnPage(modifyText, currentNode);
 		}
-		if (currentNode.nodeType !== 3 || !regex.test(currentNode.data)) {
+		if (currentNode.nodeType !== 3) {
+			continue;
+		}
+		// is this really HTML?.......
+		var html = modifyText(currentNode.data);
+		if (html === currentNode.data) {
 			continue;
 		}
 		var parent = currentNode.parentNode,
 			frag = (function () {
-				var html = currentNode.data.replace(regex, replacement),
-					wrap = document.createElement('div'),
-					frag = document.createDocumentFragment();
+				var wrap = document.createElement('div');
+				var frag = document.createDocumentFragment();
 				wrap.innerHTML = html;
 				while (wrap.firstChild) {
 					frag.appendChild(wrap.firstChild);
@@ -338,3 +345,5 @@ function findAndReplace(searchText, replacement, searchNode) {
 		parent.removeChild(currentNode);
 	}
 }
+
+modifyTextOnPage(modifyText);
