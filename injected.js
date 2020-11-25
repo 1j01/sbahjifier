@@ -161,7 +161,7 @@ findAndReplace(/./ig, function (m) {
     return m.toLowerCase();
 });
 
-findAndReplace(/[ei]/ig, function (m) {
+findAndReplace(/[ei](?!\b)/ig, function (m) {
     var c = ((Math.random() > 0.4) ? m : choose("ei"));
     if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 });
