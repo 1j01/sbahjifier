@@ -62,15 +62,15 @@ chrome.tabs.insertCSS(null, { code: c }, function () {
 		showError(chrome.extension.lastError, true);
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
-		img.src = chrome.extension.getURL('awyeahbitches.gif');
-	}
-});
-
-chrome.tabs.executeScript(null, { file: "/injected.js" }, function () {
-	if (chrome.extension.lastError) {
-		showError(chrome.extension.lastError, false);
-	} else {
-		txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+		// inject JS after CSS so that font is loaded for <canvas> usage
+		chrome.tabs.executeScript(null, { file: "/injected.js" }, function () {
+			if (chrome.extension.lastError) {
+				showError(chrome.extension.lastError, false);
+			} else {
+				txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET";
+				img.src = chrome.extension.getURL('awyeahbitches.gif');
+			}
+		});
 	}
 });
 
