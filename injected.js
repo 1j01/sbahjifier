@@ -101,10 +101,13 @@ function buttun(e, text) {
     //canvas.style.width=getComputedStyle(e).pixelWidth;
     //canvas.style.height=getComputedStyle(e).pixelHeight;
     var s = choose([0.5, 1, 1, 2, 2, 2, 3, 1, 3, 5, 1, 1, 1, 1, 2, 2]);
-    canvas.width = parseInt(getComputedStyle(e).pixelWidth) / s;
-    canvas.height = parseInt(getComputedStyle(e).pixelHeight) / s;
-    canvas.style.width = `${parseInt(getComputedStyle(e).pixelWidth) * s}px`;
-    canvas.style.height = `${parseInt(getComputedStyle(e).pixelHeight) * s}px`;
+    var w = Math.min(e.offsetWidth, innerWidth * 0.8);
+    var h = Math.min(e.offsetHeight, innerHeight / 10);
+    // console.log(getComputedStyle(e), getComputedStyle(e).pixelWidth, getComputedStyle(e).width, e.offsetWidth);
+    canvas.width = w / s;
+    canvas.height = h / s;
+    canvas.style.width = `${w * s}px`;
+    canvas.style.height = `${h * s}px`;
     //e.parentNode.appendChild(canvas, e);
     var ctx = canvas.getContext("2d");
     ctx.save();
