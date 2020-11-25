@@ -61,7 +61,7 @@ for (i in a) {
 /////////////////////////////////////
 
 var els = Array.from(document.getElementsByClassName("SBAHJ-static-canvas"));
-for (i in els) { buttun(els[i], els[i].text); }
+for (i in els) { buttun(els[i], els[i].getAttribute("aria-label")); }
 var els = Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[type=submit]"));
 for (i in els) { buttun(els[i]); }
 // var els = Array.from(document.getElementsByTagName("button"));
@@ -71,7 +71,7 @@ for (i in els) { buttun(els[i]); }
 
 function buttun(e, text) {
     if (!e || !e.style) return;
-    text = text || e.innerText || e.value || e.text || e.txt || e.title || e.name || e.className || "bro..........";
+    text = text || e.innerText || e.value || e.getAttribute("aria-label") || e.title || e.id || e.name || e.className || "bro..........";
     // if (!e) {
     //     console.log("Nothing here!");
     //     return;
@@ -84,12 +84,13 @@ function buttun(e, text) {
     //var e=document.getElementById("buttun");
     var canvas = document.createElement("canvas");
     canvas.className = "SBAHJ-static-canvas";
-    canvas.text = text;
+    canvas.setAttribute("aria-label", text);
     //canvas.style.border="1px solid #d3d3d3";
     //canvas.style.webkitTransform="scale(2)";
     //alert(getComputedStyle(e).pixelWidth);
-    if (Math.random() > 0.5)
+    if (Math.random() > 0.5) {
         e.style.background = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+    }
     //e.style.border="0";
 
     //canvas.width=300+Math.random()*100;
