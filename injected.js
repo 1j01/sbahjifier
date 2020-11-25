@@ -130,7 +130,8 @@ function buttun(e, text) {
     }
 
     ctx.restore();
-    ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'Comic Sans' 'Comic Sans MS' 'ComicSans' 'Chalkboard SE' 'Comic Neue' 'comic' 'sans-serif'`;
+    ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'ComicSans'`;
+    // ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'Comic Sans' 'Comic Sans MS' 'ComicSans' 'Chalkboard SE' 'Comic Neue' 'comic' 'sans-serif'`;
     ctx.lineWidth = 5;
     ctx.strokeStyle = 'rgba(0,0,0,255)';
     ctx.textAlign = choose(['center', 'left', 'center', 'left', 'right']);

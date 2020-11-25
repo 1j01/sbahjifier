@@ -26,7 +26,8 @@ ${selector} {
 	}
 	css += `
 * {
-	font-family: "Comic Sans", "Comic Sans MS", "ComicSans", "Chalkboard SE", "Comic Neue", comic, sans-serif !important;
+	/* web font comes first so it's loaded for <canvas> usage */
+	font-family: "ComicSans", "Comic Sans", "Comic Sans MS", "Chalkboard SE", "Comic Neue", comic, sans-serif !important;
 }
 @font-face {
 	font-family: "ComicSans";
