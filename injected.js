@@ -125,7 +125,7 @@ for (i in a) {
 a = Array.from(document.querySelectorAll("*"));
 for (i in a) {
 	try {
-		if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i].style && a[i].insertAdjacentHTML) {
+		if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i].style && a[i].insertAdjacentElement) {
 			if (Math.random() < 0.001) {
 				a[i].style.backgroundImage = `url("${getimageurl()}")`;
 			} else if (Math.random() < 0.01) {
@@ -133,20 +133,15 @@ for (i in a) {
 				a[i].style.color = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
 			}
 			//TODO: Make number of images vary inversely with the number of elements on the page.
+			var img = document.createElement("img");
+			img.src = getimageurl();
+			img.className = "SBAHJ";
 			if (Math.random() < 0.002 || ispop) {
-				a[i].insertAdjacentHTML(choose(['after', 'before']) + choose(['begin', 'end']),
-					`<img
-						src="${getimageurl()}"
-						class="SBAHJ"
-					>`);
+				a[i].insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
 			} else if (Math.random() < 0.005 || ispop) {
-				a[i].insertAdjacentHTML(choose(['after', 'before']) + choose(['begin', 'end']),
-					`<img
-						src="${getimageurl()}"
-						class="SBAHJ"
-						width="${Math.random() * 600}"
-						height="${Math.random() * 600}"'
-					>`);
+				img.width = Math.random() * 600;
+				img.height = Math.random() * 600;
+				a[i].insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
 			} else if (Math.random() < 0.1) {
 				//a[i].style.webkitAppearance="media-mute-button";
 			}

@@ -44,28 +44,28 @@ ${selector} {
 
 var c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q,p", ":not(img)", "div:first-child,ul"]));
 
-var showError = function (error, bwe) {
+var showError = function (error, context) {
 	var errorString = `${error.message || error}`;
 	if (errorString.match(/chrome:\/\/|host permission/i)) {
 		errorString = "Try a different website!";
 	}
 	txt.innerHTML = `
 	Sorry bro this page thinks its cool but its not dont worry.
-	${bwe ? "BWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" : ""}
 	<br>
-	<small>${errorString}</small>`;
+	<small></small>`;
+	txt.querySelector("small").textContent = `${errorString} (error occurred in ${context})`;
 	img.src = runtime.getURL('rii.jpg');
 };
 
 tabs.insertCSS(null, { code: c }, function () {
 	if (runtime.lastError) {
-		showError(runtime.lastError, true);
+		showError(runtime.lastError, "tabs.insertCSS");
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 		// inject JS after CSS so that font is loaded for <canvas> usage
 		tabs.executeScript(null, { file: "/injected.js" }, function () {
 			if (runtime.lastError) {
-				showError(runtime.lastError, false);
+				showError(runtime.lastError, "tabs.executeScript");
 			} else {
 				txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET";
 				img.src = runtime.getURL('awyeahbitches.gif');
