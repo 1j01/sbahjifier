@@ -125,7 +125,7 @@ for (i in a) {
 a = Array.from(document.querySelectorAll("*"));
 for (i in a) {
 	try {
-		if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i] && a[i].style && a[i].insertAdjacentHTML) {
+		if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i].style && a[i].insertAdjacentHTML) {
 			if (Math.random() < 0.001) {
 				a[i].style.backgroundImage = `url("${getimageurl()}")`;
 			} else if (Math.random() < 0.01) {
