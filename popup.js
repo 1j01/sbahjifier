@@ -1,9 +1,11 @@
-var {runtime, tabs} = typeof browser !== "undefined" ? browser : chrome;
-var txt = document.querySelector('#swe');
-var img = document.querySelector('#sbahjimg');
+(()=> {
+
+const {runtime, tabs} = typeof browser !== "undefined" ? browser : chrome;
+const txt = document.querySelector('#swe');
+const img = document.querySelector('#sbahjimg');
 
 function getCSS(selector) {
-	var css = "";
+	let css = "";
 	if ((Math.random() < 0.05)) {
 		css += `
 ${selector} {
@@ -42,10 +44,10 @@ ${selector} {
 	return css;
 }
 
-var c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q,p", ":not(img)", "div:first-child,ul"]));
+const c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q,p", ":not(img)", "div:first-child,ul"]));
 
-var showError = function (error, context) {
-	var errorString = `${error.message || error}`;
+const showError = function (error, context) {
+	let errorString = `${error.message || error}`;
 	if (errorString.match(/chrome:\/\/|host permission/i)) {
 		errorString = "Try a different website!";
 	}
@@ -74,9 +76,9 @@ tabs.insertCSS(null, { code: c }, function () {
 	}
 });
 
-var s = document.createElement("style");
-s.textContent = getCSS("body");
-document.head.appendChild(s);
+const style = document.createElement("style");
+style.textContent = getCSS("body");
+document.head.appendChild(style);
 
 //////////////////////////////////////////////////////////////////
 
@@ -89,3 +91,5 @@ function getgeromyurl() {
 		"many-images/jerome-spin.gif",
 	]));
 }
+
+})();

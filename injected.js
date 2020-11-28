@@ -1,5 +1,7 @@
-var {runtime} = typeof browser !== "undefined" ? browser : chrome;
-var filenames = [
+(()=> {
+
+const {runtime} = typeof browser !== "undefined" ? browser : chrome;
+const filenames = [
 	"54nk.gif",
 	"boots.jpg",
 	"c4irbJrl.jpg",
@@ -101,49 +103,47 @@ var filenames = [
 ];
 
 function getimageurl() {
-	var paths = filenames.map(function (name) {
+	const paths = filenames.map(function (name) {
 		return "many-images/" + name;
 	});
-	var path = choose(paths);
+	const path = choose(paths);
 	return runtime.getURL(path);
 }
 function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 
-a = Array.from(document.querySelectorAll("img"));
-for (i in a) {
+for (const img of Array.from(document.querySelectorAll("img"))) {
 	if (Math.random() < 0.01) {
-		a[i].src = getimageurl(a[i].width, a[i].height);
+		img.src = getimageurl(img.width, img.height);
 	}
 	if (Math.random() < 0.01) {
-		//a[i].style.webkitAppearance="media-mute-button";
+		//img.style.webkitAppearance="media-mute-button";
 		//s=document.createElement("style");s.textContent="*{-webkit-appearance:media-mute-button;}";
 	}
 }
 
 // add things to the page, mess with some css
-a = Array.from(document.querySelectorAll("*"));
-for (i in a) {
+for (const el of Array.from(document.querySelectorAll("*"))) {
 	try {
-		if (a[i] && a[i].nodeName && isChillElementType(a[i].nodeName) && a[i].style && a[i].insertAdjacentElement) {
+		if (el && el.nodeName && isChillElementType(el.nodeName) && el.style && el.insertAdjacentElement) {
 			if (Math.random() < 0.001) {
-				a[i].style.backgroundImage = `url("${getimageurl()}")`;
+				el.style.backgroundImage = `url("${getimageurl()}")`;
 			} else if (Math.random() < 0.01) {
-				a[i].style.backgroundColor = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
-				a[i].style.color = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
+				el.style.backgroundColor = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
+				el.style.color = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
 			}
 			//TODO: Make number of images vary inversely with the number of elements on the page.
-			var img = document.createElement("img");
+			const img = document.createElement("img");
 			img.src = getimageurl();
 			img.className = "SBAHJ";
 			if (Math.random() < 0.002 || ispop) {
-				a[i].insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
+				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
 			} else if (Math.random() < 0.005 || ispop) {
 				img.width = Math.random() * 600;
 				img.height = Math.random() * 600;
-				a[i].insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
+				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
 			} else if (Math.random() < 0.1) {
-				//a[i].style.webkitAppearance="media-mute-button";
+				//el.style.webkitAppearance="media-mute-button";
 			}
 		}
 	} catch (err) {
@@ -151,28 +151,14 @@ for (i in a) {
 	}
 }
 
-// // add things to the page
-// a = Array.from(document.querySelectorAll("div"));
-// for (i in a) {
-//     if (Math.random() < 0.02) {
-//         a[i].insertAdjacentHTML('afterend', `<img src=${getimageurl()}>`);
-//     } else if (Math.random() < 0.005) {
-//         a[i].insertAdjacentHTML('afterend', `<img src=${getimageurl()} width=${Math.random() * 100} height=${Math.random() * 100}>`);
-//     } else if (Math.random() < 0.1) {
-//         a[i].style.webkitAppearance = "media-mute-button";
-//     }
-// }
-
 /////////////////////////////////////
 
-var els = Array.from(document.getElementsByClassName("SBAHJ-static-canvas"));
-for (i in els) { buttun(els[i], els[i].getAttribute("aria-label")); }
-var els = Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[type=submit]"));
-for (i in els) { buttun(els[i]); }
-// var els = Array.from(document.getElementsByTagName("button"));
-// for (i in els) { buttun(els[i]); }
-// var els = Array.from(document.getElementsByTagName("h1"));
-// for (i in els) { buttun(els[i]); }
+for (el of Array.from(document.getElementsByClassName("SBAHJ-static-canvas"))) {
+	buttun(el, el.getAttribute("aria-label"));
+}
+for (el of Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[type=submit]"))) {
+	buttun(el);
+}
 
 function buttun(e, text) {
 	if (!e || !e.style) return;
@@ -186,8 +172,7 @@ function buttun(e, text) {
 	//         return;
 	//     }
 	// }
-	//var e=document.getElementById("buttun");
-	var canvas = document.createElement("canvas");
+	const canvas = document.createElement("canvas");
 	canvas.className = "SBAHJ-static-canvas";
 	canvas.setAttribute("aria-label", text);
 	//canvas.style.border="1px solid #d3d3d3";
@@ -206,20 +191,20 @@ function buttun(e, text) {
 	//canvas.height=canvas.offsetHeight+41;
 	//canvas.style.width=getComputedStyle(e).pixelWidth;
 	//canvas.style.height=getComputedStyle(e).pixelHeight;
-	var s = choose([0.5, 1, 1, 2, 2, 2, 3, 1, 3, 5, 1, 1, 1, 1, 2, 2]);
-	var w = Math.min(e.offsetWidth, innerWidth * 0.8);
-	var h = Math.min(e.offsetHeight, innerHeight / 10);
+	const s = choose([0.5, 1, 1, 2, 2, 2, 3, 1, 3, 5, 1, 1, 1, 1, 2, 2]);
+	const w = Math.min(e.offsetWidth, innerWidth * 0.8);
+	const h = Math.min(e.offsetHeight, innerHeight / 10);
 	// console.log(getComputedStyle(e), getComputedStyle(e).pixelWidth, getComputedStyle(e).width, e.offsetWidth);
 	canvas.width = w / s;
 	canvas.height = h / s;
 	canvas.style.width = `${w * s}px`;
 	canvas.style.height = `${h * s}px`;
 	//e.parentNode.appendChild(canvas, e);
-	var ctx = canvas.getContext("2d");
+	const ctx = canvas.getContext("2d");
 	ctx.save();
 
-	for (var i = 0; i < 16; i++) {
-		var x, y, x1, y1;
+	for (let i = 0; i < 16; i++) {
+		let x, y, x1, y1;
 		x = Math.random() * 50;
 		y = Math.random() * 50;
 		if (Math.random() < 0.5) {
@@ -245,8 +230,8 @@ function buttun(e, text) {
 
 	ctx.fillText(text, canvas.width / 2 + Math.random() * 20 - 10, canvas.height / 2 + Math.random() * 20 - 10);
 
-	var onclick = e.onclick;
-	var href = e.href;
+	const onclick = e.onclick;
+	const href = e.href;
 
 	e.parentNode.replaceChild(canvas, e);
 	if (onclick) {
@@ -262,29 +247,29 @@ function buttun(e, text) {
 //////////////////////
 
 // this improvis our smelling and grammer.............. BTRRRRR!!!!!1.?
-var uc = false;
-var replacements = [
+let uc = false;
+const replacements = [
 	[/./ig, function (m) {
 		return m.toLowerCase();
 	}],
 	[/[ei](?!\b)/ig, function (m) {
-		var c = ((Math.random() > 0.4) ? m : choose("ei"));
+		const c = ((Math.random() > 0.4) ? m : choose("ei"));
 		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 	}],
 	[/[uo]/ig, function (m) {
-		var c = ((Math.random() > 0.4) ? m : choose("uo"));
+		const c = ((Math.random() > 0.4) ? m : choose("uo"));
 		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 	}],
 	[/[aeiou]/ig, function (m) {
-		var c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
+		const c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
 		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 	}],
 	[/[b-df-hj-np-tvwxz]/ig, function (m) {
-		var c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
+		const c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
 		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 	}],
 	[/[dg]/ig, function (m) {
-		var c = ((Math.random() > 0.3) ? m : choose("dg"));
+		const c = ((Math.random() > 0.3) ? m : choose("dg"));
 		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
 	}],
 	[/\.+/ig, function (m) {
@@ -311,11 +296,11 @@ function isChillElementType(tagName) {
 		&& tagName !== "STYLE";
 }
 function modifyTextOnPage(modifyText, searchNode=document.body) {
-	var childNodes = searchNode.childNodes;
-	var cnLength = childNodes.length;
-	var excludes = 'html,head,style,title,link,meta,script,object,iframe';
-	while (cnLength--) {
-		var currentNode = childNodes[cnLength];
+	const {childNodes} = searchNode;
+	let index = childNodes.length;
+	const excludes = 'html,head,style,title,link,meta,script,object,iframe';
+	while (index--) {
+		const currentNode = childNodes[index];
 		if (currentNode.nodeType === 1 &&
 			(excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
 			modifyTextOnPage(modifyText, currentNode);
@@ -323,23 +308,22 @@ function modifyTextOnPage(modifyText, searchNode=document.body) {
 		if (currentNode.nodeType !== 3) {
 			continue;
 		}
-		var text = modifyText(currentNode.data);
+		const text = modifyText(currentNode.data);
 		if (text === currentNode.data) {
 			continue;
 		}
-		var parent = currentNode.parentNode,
-			frag = (function () {
-				var wrap = document.createElement('div');
-				var frag = document.createDocumentFragment();
-				wrap.textContent = text;
-				while (wrap.firstChild) {
-					frag.appendChild(wrap.firstChild);
-				}
-				return frag;
-			})();
+		const parent = currentNode.parentNode;
+		const wrap = document.createElement('div');
+		const frag = document.createDocumentFragment();
+		wrap.textContent = text;
+		while (wrap.firstChild) {
+			frag.appendChild(wrap.firstChild);
+		}
 		parent.insertBefore(frag, currentNode);
 		parent.removeChild(currentNode);
 	}
 }
 
 modifyTextOnPage(modifyText);
+
+})();
