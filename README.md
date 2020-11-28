@@ -1,13 +1,13 @@
-# [SBAHJifier][Chrome Web Store page]
+# [SBAHJifier][Chrome extension page]
 
 Make any page look like [SWEET BRO AND HELLA JEFF][].
 
 "Dave: Combine brain and SBaHJ drawing and chrome extension."
 ([relevant comic page](https://www.homestuck.com/story/1845))
 
-Install the extension [on the Chrome Web Store][Chrome Web Store page].
+Install the extension for [Chrome][Chrome extension page] or [Firefox][Firefox addon page].
 
-[![whuuurrrrr.........](whurr.png)][Chrome Web Store page]
+[![whuuurrrrr.........](whurr.png)][Chrome extension page]
 
 ## See Also
 
@@ -21,5 +21,6 @@ The code is licensed under the MIT License. See [LICENSE.md](LICENSE.md).
 
 [She has what?]: https://github.com/1j01/she-has-what?
 [Pesterchum]: https://github.com/1j01/pesterchum
-[Chrome Web Store page]: https://chrome.google.com/webstore/detail/sbahjifier/gejobhmmpioknjihlhemplpfchbnbpin
+[Chrome extension page]: https://chrome.google.com/webstore/detail/sbahjifier/gejobhmmpioknjihlhemplpfchbnbpin
+[Firefox addon page]: https://addons.mozilla.org/en-US/firefox/addon/1j01-sbahjifier/
 [SWEET BRO AND HELLA JEFF]: http://www.mspaintadventures.com/sweetbroandhellajeff/
