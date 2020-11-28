@@ -328,16 +328,15 @@ function modifyTextOnPage(modifyText, searchNode=document.body) {
 		if (currentNode.nodeType !== 3) {
 			continue;
 		}
-		// is this really HTML?.......
-		var html = modifyText(currentNode.data);
-		if (html === currentNode.data) {
+		var text = modifyText(currentNode.data);
+		if (text === currentNode.data) {
 			continue;
 		}
 		var parent = currentNode.parentNode,
 			frag = (function () {
 				var wrap = document.createElement('div');
 				var frag = document.createDocumentFragment();
-				wrap.innerHTML = html;
+				wrap.textContent = text;
 				while (wrap.firstChild) {
 					frag.appendChild(wrap.firstChild);
 				}
