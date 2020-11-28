@@ -1,3 +1,4 @@
+var {runtime} = typeof browser !== "undefined" ? browser : chrome;
 var filenames = [
 	"54nk.gif",
 	"boots.jpg",
@@ -98,12 +99,13 @@ var filenames = [
 	"moneytile.gif",
 	"moneytile.gif",
 ];
+
 function getimageurl() {
 	var paths = filenames.map(function (name) {
 		return "many-images/" + name;
 	});
 	var path = choose(paths);
-	return (typeof browser !== "undefined" ? browser : chrome).runtime.getURL(path);
+	return runtime.getURL(path);
 }
 function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 

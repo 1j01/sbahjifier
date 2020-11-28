@@ -7,8 +7,6 @@ Make any page look like [SWEET BRO AND HELLA JEFF][].
 
 Install the extension [on the Chrome Web Store][Chrome Web Store page].
 
-TODO: WebExtension for Firefox and other browsers! (with [a polyfill](https://github.com/mozilla/webextension-polyfill) for chrome)
-
 [![whuuurrrrr.........](whurr.png)][Chrome Web Store page]
 
 ## See Also

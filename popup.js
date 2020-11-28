@@ -1,4 +1,4 @@
-
+var {runtime, tabs} = typeof browser !== "undefined" ? browser : chrome;
 var txt = document.querySelector('#swe');
 var img = document.querySelector('#sbahjimg');
 
@@ -31,10 +31,10 @@ ${selector} {
 }
 @font-face {
 	font-family: "ComicSans";
-	src: url('${chrome.extension.getURL('comic-sans.woff')}');
+	src: url('${runtime.getURL('comic-sans.woff')}');
 	src:
-		url('${chrome.extension.getURL('comic-sans.woff')}') format('woff'),
-		url('${chrome.extension.getURL('comic-sans.ttf')}') format('truetype');
+		url('${runtime.getURL('comic-sans.woff')}') format('woff'),
+		url('${runtime.getURL('comic-sans.ttf')}') format('truetype');
 }
 :nth-child(${Math.floor(Math.random() * 10)}):hover:after { content: url("${getgeromyurl()}"); }
 :nth-child(${Math.floor(Math.random() * 10)}):hover:after { content: url("${getgeromyurl()}"); }
@@ -54,21 +54,21 @@ var showError = function (error, bwe) {
 	${bwe ? "BWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE" : ""}
 	<br>
 	<small>${errorString}</small>`;
-	img.src = chrome.extension.getURL('rii.jpg');
+	img.src = runtime.getURL('rii.jpg');
 };
 
-chrome.tabs.insertCSS(null, { code: c }, function () {
-	if (chrome.extension.lastError) {
-		showError(chrome.extension.lastError, true);
+tabs.insertCSS(null, { code: c }, function () {
+	if (runtime.lastError) {
+		showError(runtime.lastError, true);
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 		// inject JS after CSS so that font is loaded for <canvas> usage
-		chrome.tabs.executeScript(null, { file: "/injected.js" }, function () {
-			if (chrome.extension.lastError) {
-				showError(chrome.extension.lastError, false);
+		tabs.executeScript(null, { file: "/injected.js" }, function () {
+			if (runtime.lastError) {
+				showError(runtime.lastError, false);
 			} else {
 				txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET";
-				img.src = chrome.extension.getURL('awyeahbitches.gif');
+				img.src = runtime.getURL('awyeahbitches.gif');
 			}
 		});
 	}
@@ -82,7 +82,7 @@ document.head.appendChild(s);
 
 function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function getgeromyurl() {
-	return (typeof browser !== "undefined" ? browser : chrome).runtime.getURL(choose([
+	return runtime.getURL(choose([
 		"many-images/gerome.jpeg",
 		"many-images/gerome-dance.gif",
 		"many-images/jerome.jpg",
