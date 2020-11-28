@@ -102,6 +102,51 @@ const filenames = [
 	"moneytile.gif",
 ];
 
+// this improvis our smelling and grammer.............. BETTTRRRRR!!!!!1.?
+const uc = false;
+const replacements = [
+	[/./ig, function (m) {
+		return m.toLowerCase();
+	}],
+	[/[ei](?!\b)/ig, function (m) {
+		const c = ((Math.random() > 0.4) ? m : choose("ei"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[uo]/ig, function (m) {
+		const c = ((Math.random() > 0.4) ? m : choose("uo"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[aeiou]/ig, function (m) {
+		const c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[b-df-hj-np-tvwxz]/ig, function (m) {
+		const c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/[dg]/ig, function (m) {
+		const c = ((Math.random() > 0.3) ? m : choose("dg"));
+		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
+	}],
+	[/\.+/ig, function (m) {
+		return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
+	}],
+	[/their|they're|there|thare|thair|tha're|the're|thei're|thier/ig, function (m) {
+		return choose(["their", "they're", "there", "thare", "thair", "tha're", "the're", "thei're", "thier"]);
+	}],
+	[/'ll/ig, "'m"],
+	// [/[b-df-hj-np-tvwxz]/ig, function (m) { return ((Math.random() > 0.01) ? m : choose("wrtpsdfghjklzxcvbnm")) }],
+];
+
+const choose = (arr)=> arr[Math.floor(Math.random() * arr.length)];
+
+function modifyText(text) {
+	for (const [regexp, replacer] of replacements) {
+		text = text.replace(regexp, replacer);
+	}
+	return text;
+}
+
 function getimageurl() {
 	const paths = filenames.map(function (name) {
 		return "many-images/" + name;
@@ -109,9 +154,8 @@ function getimageurl() {
 	const path = choose(paths);
 	return runtime.getURL(path);
 }
-function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-
+// randomly replace images
 for (const img of Array.from(document.querySelectorAll("img"))) {
 	if (Math.random() < 0.01) {
 		img.src = getimageurl(img.width, img.height);
@@ -125,7 +169,16 @@ for (const img of Array.from(document.querySelectorAll("img"))) {
 // add things to the page, mess with some css
 for (const el of Array.from(document.querySelectorAll("*"))) {
 	try {
-		if (el && el.nodeName && isChillElementType(el.nodeName) && el.style && el.insertAdjacentElement) {
+		if (
+			el &&
+			el.nodeName &&
+			el.style &&
+			el.insertAdjacentElement &&
+			el.nodeName !== "BODY" &&
+			el.nodeName !== "HEAD" &&
+			el.nodeName !== "HTML" &&
+			el.nodeName !== "STYLE" 
+		) {
 			if (Math.random() < 0.001) {
 				el.style.backgroundImage = `url("${getimageurl()}")`;
 			} else if (Math.random() < 0.01) {
@@ -163,6 +216,7 @@ for (el of Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[t
 function buttun(e, text) {
 	if (!e || !e.style) return;
 	text = text || e.innerText || e.value || e.getAttribute("aria-label") || e.title || e.id || e.name || e.className || "bro..........";
+	text = modifyText(text);
 	// if (!e) {
 	//     console.log("Nothing here!");
 	//     return;
@@ -246,55 +300,6 @@ function buttun(e, text) {
 //////////////////////////////////////////////////////
 //////////////////////
 
-// this improvis our smelling and grammer.............. BTRRRRR!!!!!1.?
-let uc = false;
-const replacements = [
-	[/./ig, function (m) {
-		return m.toLowerCase();
-	}],
-	[/[ei](?!\b)/ig, function (m) {
-		const c = ((Math.random() > 0.4) ? m : choose("ei"));
-		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-	}],
-	[/[uo]/ig, function (m) {
-		const c = ((Math.random() > 0.4) ? m : choose("uo"));
-		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-	}],
-	[/[aeiou]/ig, function (m) {
-		const c = ((Math.random() > 0.001) ? m : choose("aeiouooooaeuiy"));
-		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-	}],
-	[/[b-df-hj-np-tvwxz]/ig, function (m) {
-		const c = ((Math.random() > 0.001) ? m : choose("wrtpsddffghjklzxcvbnm"));
-		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-	}],
-	[/[dg]/ig, function (m) {
-		const c = ((Math.random() > 0.3) ? m : choose("dg"));
-		if (m.toUpperCase() === m && uc) { return c.toUpperCase(); } else { return c; }
-	}],
-	[/\.+/ig, function (m) {
-		return choose([m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, " ", "....", ".......", ".....", "..........", "......"]);
-	}],
-	[/their|they're|there|thare|thair|tha're|the're|thei're|thier/ig, function (m) {
-		return choose(["their", "they're", "there", "thare", "thair", "tha're", "the're", "thei're", "thier"]);
-	}],
-	[/'ll/ig, "'m"],
-	// [/[b-df-hj-np-tvwxz]/ig, function (m) { return ((Math.random() > 0.01) ? m : choose("wrtpsdfghjklzxcvbnm")) }],
-];
-
-function modifyText(text) {
-	for (const [regexp, replacer] of replacements) {
-		text = text.replace(regexp, replacer);
-	}
-	return text;
-}
-
-function isChillElementType(tagName) {
-	return tagName !== "BODY"
-		&& tagName !== "HEAD"
-		&& tagName !== "HTML"
-		&& tagName !== "STYLE";
-}
 function modifyTextOnPage(modifyText, searchNode=document.body) {
 	const {childNodes} = searchNode;
 	let index = childNodes.length;
