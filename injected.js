@@ -298,11 +298,13 @@ function isChillElementType(tagName) {
 function modifyTextOnPage(modifyText, searchNode=document.body) {
 	const {childNodes} = searchNode;
 	let index = childNodes.length;
-	const excludes = 'html,head,style,title,link,meta,script,object,iframe';
+	const excludes = ['html', 'head', 'style', 'title', 'link', 'meta', 'script', 'object', 'iframe'];
 	while (index--) {
 		const currentNode = childNodes[index];
-		if (currentNode.nodeType === 1 &&
-			(excludes + ',').indexOf(currentNode.nodeName.toLowerCase() + ',') === -1) {
+		if (
+			currentNode.nodeType === 1 &&
+			excludes.indexOf(currentNode.nodeName.toLowerCase()) === -1
+		) {
 			modifyTextOnPage(modifyText, currentNode);
 		}
 		if (currentNode.nodeType !== 3) {
