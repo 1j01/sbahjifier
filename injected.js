@@ -189,9 +189,9 @@ for (const el of Array.from(document.querySelectorAll("*"))) {
 			const img = document.createElement("img");
 			img.src = getimageurl();
 			img.className = "SBAHJ";
-			if (Math.random() < 0.002 || ispop) {
+			if (Math.random() < (window.isPopup ? 0 : 0.002)) {
 				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
-			} else if (Math.random() < 0.005 || ispop) {
+			} else if (Math.random() < (window.isPopup ? 0 : 0.005)) {
 				img.width = Math.random() * 600;
 				img.height = Math.random() * 600;
 				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);

@@ -1,5 +1,7 @@
 (async ()=> {
 
+window.isPopup = true;
+
 const {runtime, tabs} = typeof browser !== "undefined" ? browser : chrome;
 const txt = document.querySelector('#swe');
 const img = document.querySelector('#sbahjimg');
