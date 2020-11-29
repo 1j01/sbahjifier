@@ -333,4 +333,6 @@ function modifyTextOnPage(modifyText, searchNode=document.body) {
 
 modifyTextOnPage(modifyText);
 
+return "success";
+
 })();

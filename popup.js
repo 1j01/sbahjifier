@@ -1,4 +1,4 @@
-(()=> {
+(async ()=> {
 
 const {runtime, tabs} = typeof browser !== "undefined" ? browser : chrome;
 const txt = document.querySelector('#swe');
@@ -48,26 +48,39 @@ const c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q
 
 const showError = function (error, context) {
 	let errorString = `${error.message || error}`;
-	if (errorString.match(/chrome:\/\/|host permission/i)) {
+	if (errorString.match(/chrome:\/\/|about:\/\/|host permission/i)) { // |Can't run on
 		errorString = "Try a different website!";
+	}
+	if (context) {
+		errorString = `${errorString} (${context})`;
 	}
 	txt.innerHTML = `
 	Sorry bro this page thinks its cool but its not dont worry.
 	<br>
 	<small></small>`;
-	txt.querySelector("small").textContent = `${errorString} (error occurred in ${context})`;
+	txt.querySelector("small").textContent = errorString;
 	img.src = runtime.getURL('rii.jpg');
 };
 
+// const tab = await browser.tabs.query({currentWindow: true, active: true})[0];
+// if (!tab) {
+// 	// "Can't run on" is sentinel
+// 	showError(new Error("Can't run on this page."));
+// } else if (tab.url.match(/^about:/)) {
+// 	// "Can't run on" is sentinel
+// 	showError(new Error("Can't run on about: pages"));
+// } else {
 tabs.insertCSS(null, { code: c }, function () {
 	if (runtime.lastError) {
-		showError(runtime.lastError, "tabs.insertCSS");
+		showError(runtime.lastError, "error occurred in tabs.insertCSS");
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 		// inject JS after CSS so that font is loaded for <canvas> usage
-		tabs.executeScript(null, { file: "/injected.js" }, function () {
+		tabs.executeScript(null, { file: "/injected.js" }, function ([result]) {
 			if (runtime.lastError) {
-				showError(runtime.lastError, "tabs.executeScript");
+				showError(runtime.lastError, "error occurred in tabs.executeScript");
+			} else if (result !== "success") {
+				showError(new Error("Can't run on this page. Got " + result));
 			} else {
 				txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET";
 				img.src = runtime.getURL('awyeahbitches.gif');
@@ -75,6 +88,7 @@ tabs.insertCSS(null, { code: c }, function () {
 		});
 	}
 });
+// }
 
 const style = document.createElement("style");
 style.textContent = getCSS("body");
