@@ -50,16 +50,24 @@ const c = getCSS(choose(["body", "div,ul", "span,li,q", "a,b,q,i,td", "ul,a,em,q
 
 const showError = function (error, context) {
 	let errorString = `${error.message || error}`;
-	if (errorString.match(/chrome:\/\/|about:\/\/|host permission/i)) { // |Can't run on
-		errorString = "Try a different website!";
+	if (errorString.match(/chrome:\/\/|about:\/\/|host permission|Cannot access contents of the page|Try a different page/i)) {
+		txt.innerHTML = `
+		Sorry bro this page thinks its cool but its not dont worry.
+		<br>
+		<h1>Try a different website!</h1>
+		<br>
+		<small></small>`;
+	} else {
+		txt.innerHTML = `
+		Something's not working right...
+		<br>
+		<h1>What's happening?</h1>
+		<br>
+		<small></small>`;
 	}
 	if (context) {
 		errorString = `${errorString} (${context})`;
 	}
-	txt.innerHTML = `
-	Sorry bro this page thinks its cool but its not dont worry.
-	<br>
-	<small></small>`;
 	txt.querySelector("small").textContent = errorString;
 	img.src = runtime.getURL('rii.jpg');
 };
@@ -78,11 +86,15 @@ tabs.insertCSS(null, { code: c }, function () {
 	} else {
 		txt.innerText = "SWEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 		// inject JS after CSS so that font is loaded for <canvas> usage
-		tabs.executeScript(null, { file: "/injected.js" }, function ([result]) {
+		tabs.executeScript(null, { file: "/injected.js" }, function (results) {
 			if (runtime.lastError) {
 				showError(runtime.lastError, "error occurred in tabs.executeScript");
-			} else if (result !== "success") {
-				showError(new Error("Can't run on this page. Got " + result));
+			} else if (results.length === 0) {
+				// "Try a different page" is a sentinel string
+				showError(new Error("Try a different page! (No frames to inject into here)"));
+			} else if (!results.every((result)=> result === "success")) {
+				// "Try a different page" is a sentinel string
+				showError(new Error("Try a different page!"));
 			} else {
 				txt.innerText += "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEET";
 				img.src = runtime.getURL('awyeahbitches.gif');
