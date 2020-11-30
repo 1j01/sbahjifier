@@ -253,13 +253,13 @@ function buttun(el, text) {
 
 	ctx.fillText(text, canvas.width / 2 + Math.random() * 20 - 10, canvas.height / 2 + Math.random() * 20 - 10);
 
-	const onclick = el.onclick;
 	const href = el.href;
 
 	el.parentNode.replaceChild(canvas, el);
-	if (onclick) {
-		canvas.onclick = onclick;
-	} else if (href) {
+	canvas.onclick = ()=> {
+		el.click();
+	};
+	if (href) {
 		canvas.href = href;
 		canvas.onclick = function () { location.href = this.href };
 	}
