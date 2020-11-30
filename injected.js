@@ -147,7 +147,7 @@ function modifyText(text) {
 	return text;
 }
 
-function getimageurl() {
+function getImageURL() {
 	const paths = filenames.map(function (name) {
 		return "many-images/" + name;
 	});
@@ -158,11 +158,7 @@ function getimageurl() {
 // randomly replace images
 for (const img of Array.from(document.querySelectorAll("img"))) {
 	if (Math.random() < 0.01) {
-		img.src = getimageurl(img.width, img.height);
-	}
-	if (Math.random() < 0.01) {
-		//img.style.webkitAppearance="media-mute-button";
-		//s=document.createElement("style");s.textContent="*{-webkit-appearance:media-mute-button;}";
+		img.src = getImageURL(img.width, img.height);
 	}
 }
 
@@ -180,14 +176,14 @@ for (const el of Array.from(document.querySelectorAll("*"))) {
 			el.nodeName !== "STYLE" 
 		) {
 			if (Math.random() < 0.001) {
-				el.style.backgroundImage = `url("${getimageurl()}")`;
+				el.style.backgroundImage = `url("${getImageURL()}")`;
 			} else if (Math.random() < 0.01) {
 				el.style.backgroundColor = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
 				el.style.color = `#${(Math.random() * 0xFFFFFF << 0).toString(16)}`;
 			}
 			//TODO: Make number of images vary inversely with the number of elements on the page.
 			const img = document.createElement("img");
-			img.src = getimageurl();
+			img.src = getImageURL();
 			img.className = "SBAHJ";
 			if (Math.random() < (window.isPopup ? 0 : 0.002)) {
 				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
@@ -195,8 +191,6 @@ for (const el of Array.from(document.querySelectorAll("*"))) {
 				img.width = Math.random() * 600;
 				img.height = Math.random() * 600;
 				el.insertAdjacentElement(choose(['after', 'before']) + choose(['begin', 'end']), img);
-			} else if (Math.random() < 0.1) {
-				//el.style.webkitAppearance="media-mute-button";
 			}
 		}
 	} catch (err) {
@@ -213,47 +207,23 @@ for (el of Array.from(document.querySelectorAll("button,h1,h2,h3,.button,input[t
 	buttun(el);
 }
 
-function buttun(e, text) {
-	if (!e || !e.style) return;
-	text = text || e.innerText || e.value || e.getAttribute("aria-label") || e.title || e.id || e.name || e.className || "bro..........";
+function buttun(el, text) {
+	if (!el || !el.style) return;
+	text = text || el.innerText || el.value || el.getAttribute("aria-label") || el.title || el.id || el.name || el.className || "bro..........";
 	text = modifyText(text);
-	// if (!e) {
-	//     console.log("Nothing here!");
-	//     return;
-	// } else {
-	//     if (!e.style) {
-	//         console.log("Not an element!!");
-	//         return;
-	//     }
-	// }
 	const canvas = document.createElement("canvas");
 	canvas.className = "SBAHJ-static-canvas";
 	canvas.setAttribute("aria-label", text);
-	//canvas.style.border="1px solid #d3d3d3";
-	//canvas.style.webkitTransform="scale(2)";
-	//alert(getComputedStyle(e).pixelWidth);
 	if (Math.random() > 0.5) {
-		e.style.background = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+		el.style.background = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
 	}
-	//e.style.border="0";
-
-	//canvas.width=300+Math.random()*100;
-	//canvas.height=30+Math.random()*30;
-	//canvas.style.width=`${400+Math.random()*400}px`;
-	//canvas.style.height=`${130+Math.random()*10}px`;
-	//canvas.width=canvas.offsetWidth+31;
-	//canvas.height=canvas.offsetHeight+41;
-	//canvas.style.width=getComputedStyle(e).pixelWidth;
-	//canvas.style.height=getComputedStyle(e).pixelHeight;
 	const s = choose([0.5, 1, 1, 2, 2, 2, 3, 1, 3, 5, 1, 1, 1, 1, 2, 2]);
-	const w = Math.min(e.offsetWidth, innerWidth * 0.8);
-	const h = Math.min(e.offsetHeight, innerHeight / 10);
-	// console.log(getComputedStyle(e), getComputedStyle(e).pixelWidth, getComputedStyle(e).width, e.offsetWidth);
+	const w = Math.min(el.offsetWidth, innerWidth * 0.8);
+	const h = Math.min(el.offsetHeight, innerHeight / 10);
 	canvas.width = w / s;
 	canvas.height = h / s;
 	canvas.style.width = `${w * s}px`;
 	canvas.style.height = `${h * s}px`;
-	//e.parentNode.appendChild(canvas, e);
 	const ctx = canvas.getContext("2d");
 	ctx.save();
 
@@ -276,7 +246,6 @@ function buttun(e, text) {
 
 	ctx.restore();
 	ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'ComicSans'`;
-	// ctx.font = `${((Math.random() < 0.5) ? "normal" : "bold")} ${15 + Math.random() * 20}pt 'Comic Sans' 'Comic Sans MS' 'ComicSans' 'Chalkboard SE' 'Comic Neue' 'comic' 'sans-serif'`;
 	ctx.lineWidth = 5;
 	ctx.strokeStyle = 'rgba(0,0,0,255)';
 	ctx.textAlign = choose(['center', 'left', 'center', 'left', 'right']);
@@ -284,21 +253,19 @@ function buttun(e, text) {
 
 	ctx.fillText(text, canvas.width / 2 + Math.random() * 20 - 10, canvas.height / 2 + Math.random() * 20 - 10);
 
-	const onclick = e.onclick;
-	const href = e.href;
+	const onclick = el.onclick;
+	const href = el.href;
 
-	e.parentNode.replaceChild(canvas, e);
+	el.parentNode.replaceChild(canvas, el);
 	if (onclick) {
 		canvas.onclick = onclick;
 	} else if (href) {
 		canvas.href = href;
 		canvas.onclick = function () { location.href = this.href };
 	}
-	// it bettor now
 }
 
 //////////////////////////////////////////////////////
-//////////////////////
 
 function modifyTextOnPage(modifyText, searchNode=document.body) {
 	const {childNodes} = searchNode;
