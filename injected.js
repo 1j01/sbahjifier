@@ -253,16 +253,19 @@ function buttun(el, text) {
 
 	ctx.fillText(text, canvas.width / 2 + Math.random() * 20 - 10, canvas.height / 2 + Math.random() * 20 - 10);
 
-	const href = el.href;
+	el.appendChild(canvas);
+	el.style.border = "none !important";
+	el.style.border = "none !important";
 
-	el.parentNode.replaceChild(canvas, el);
-	canvas.onclick = ()=> {
-		el.click();
-	};
-	if (href) {
-		canvas.href = href;
-		canvas.onclick = function () { location.href = this.href };
-	}
+	// const href = el.href;
+	// el.parentNode.replaceChild(canvas, el);
+	// canvas.onclick = ()=> {
+	// 	el.click();
+	// };
+	// if (href) {
+	// 	canvas.href = href;
+	// 	canvas.onclick = function () { location.href = this.href };
+	// }
 }
 
 //////////////////////////////////////////////////////
